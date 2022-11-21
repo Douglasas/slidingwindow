@@ -20,3 +20,13 @@ make vivado-sim
 # Opens simulation using Vivado
 make vivado-open-sim
 ```
+
+## Plotting image
+
+After simulating, it is possible to plot the image using Python3.
+
+> Please, be sure to install `matplotlib` with `pip2` and that python3 is in the PATH
+
+```
+make python-plot-image
+```
