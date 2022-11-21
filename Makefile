@@ -2,11 +2,21 @@
 ################ PARAMETERS ################
 ############################################
 
-IN_IMG     = $(abspath img/img.dat)
-OUT_IMG    = $(abspath out_img.dat)
+# parameters for lena image
+ifeq ($(img), lena)
+	IN_IMG     = $(abspath img/lena.dat)
+	OUT_IMG    = $(abspath out_lena.dat)
+	IMG_WIDTH  = 220
+	IMG_HEIGHT = 220
+endif
 
-IMG_WIDTH     = 5
-IMG_HEIGHT    = 5
+# default image for simple tests
+IN_IMG     ?= $(abspath img/img.dat)
+OUT_IMG    ?= $(abspath out_img.dat)
+IMG_WIDTH  ?= 5
+IMG_HEIGHT ?= 5
+
+# VHDL implementation
 WINDOW_WIDTH  = 3
 WINDOW_HEIGHT = 3
 PIXEL_WIDTH   = 8

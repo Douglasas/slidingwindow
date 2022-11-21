@@ -21,6 +21,11 @@ make vivado-sim
 make vivado-open-sim
 ```
 
+### To simulate using lena, just add another parameter
+```
+make vivado-sim img=lena
+```
+
 ## Plotting image
 
 After simulating, it is possible to plot the image using Python3.
