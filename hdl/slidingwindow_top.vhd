@@ -7,6 +7,7 @@
 ------------------------------------------------
 library ieee;
 use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
 
 entity slidingwindow_top is
   generic (
@@ -197,7 +198,24 @@ begin
   -- Implemente aqui a operação desejada, utilizando o array 2D w_WINDOW e o sinal de janela valida w_VALID
   
   o_VALID <= w_WINDOW_VALID;
-  o_PIX   <= w_WINDOW(1, 1);
-  
-  
+
+  -- Sem filtro
+  -- o_PIX   <= w_WINDOW(1, 1);
+
+  -- Filtro gaussiano
+  o_PIX   <= std_logic_vector(
+    shift_right(unsigned(w_WINDOW(0, 0)), 4) +
+    shift_right(unsigned(w_WINDOW(0, 1)), 3) +
+    shift_right(unsigned(w_WINDOW(0, 2)), 4) +
+
+    shift_right(unsigned(w_WINDOW(1, 0)), 3) +
+    shift_right(unsigned(w_WINDOW(1, 1)), 2) +
+    shift_right(unsigned(w_WINDOW(1, 2)), 3) +
+
+    shift_right(unsigned(w_WINDOW(2, 0)), 4) +
+    shift_right(unsigned(w_WINDOW(2, 1)), 3) +
+    shift_right(unsigned(w_WINDOW(2, 2)), 4)
+  );
+
+
 end architecture;
