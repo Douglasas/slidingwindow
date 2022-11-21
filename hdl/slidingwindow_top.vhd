@@ -36,9 +36,9 @@ architecture arch of slidingwindow_top is
   type t_ROWBUF_OUTS is array(WINDOW_HEIGHT-2 downto 0) of std_logic_vector(PIXEL_WIDTH-1 downto 0);
   
   ---- SIGNALS DECLARATION ----
-  signal w_WINDOW      : t_WINDOW;
-  signal w_ROWBUF_OUTS : t_ROWBUF_OUTS;
-  signal w_VALID       : std_logic;
+  signal w_WINDOW       : t_WINDOW;
+  signal w_ROWBUF_OUTS  : t_ROWBUF_OUTS;
+  signal w_WINDOW_VALID : std_logic;
 
   ---- COMPONENTS DECLARATION ----
   component slidingwindow_valid
@@ -187,7 +187,7 @@ begin
     i_VALID => i_VALID,
     i_RSTN  => i_RSTN,
     i_CLK   => i_CLK,
-    o_VALID => w_VALID
+    o_VALID => w_WINDOW_VALID
   );
   
   ----------------------------------------------------------------
@@ -196,7 +196,7 @@ begin
   
   -- Implemente aqui a operação desejada, utilizando o array 2D w_WINDOW e o sinal de janela valida w_VALID
   
-  o_VALID <= w_VALID;
+  o_VALID <= w_WINDOW_VALID;
   o_PIX   <= w_WINDOW(1, 1);
   
   
