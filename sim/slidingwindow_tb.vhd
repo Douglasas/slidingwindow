@@ -79,12 +79,14 @@ begin
       -- wait until rising edge of clock and valid pixel output
       wait until rising_edge(i_CLK) and o_VALID = '1';
       -- report pixel 
-      report "Received pixel " & integer'image(pix_count) & " = " & to_hstring(o_PIX);
+      report "out pixel: " & integer'image(pix_count) & " = " & to_hstring(o_PIX);
       -- write pixel output to line
       write(v_line, o_PIX);
       -- write line to file
       writeline(o_FILE, v_line);
     end loop;
+    -- wait for 1 more clock cycle
+    wait for PERIOD;
     -- stop simulation
     std.env.finish;
     wait;
