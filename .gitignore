@@ -1,0 +1,13 @@
+*
+*/**
+!*.md
+!LICENSE
+!Makefile
+!*/
+!/hdl/*.vhd
+!/sim/*.vhd
+!/sim/*.wcfg
+!/script/*.sh
+!/script/*.py
+!/script/*.tcl
+!/img/*.dat
