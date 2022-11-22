@@ -35,7 +35,7 @@ architecture arch of slidingwindow_valid is
   signal r_VALID   : std_logic;
 begin
 
-  -- cria um contador grande o suficiente para armazenar
+  -- cria um contador grande o suficiente para armazenar o tamanho da imagem
   p_COUNTER : process(i_RSTN, i_CLK)
   begin
     if i_RSTN = '0' then
@@ -43,9 +43,16 @@ begin
       r_COUNTER <= (others => '0');
       
     elsif rising_edge(i_CLK) then
+      -- incrementa somente quando há um pixel valido na entrada
       if i_VALID = '1' then
-        -- incrementa somente quando há um pixel valido na entrada
-        r_COUNTER <= std_logic_vector(unsigned(r_COUNTER) + '1');
+        -- se contador esta com o tamanho máximo
+        if r_COUNTER = std_logic_vector(to_unsigned(IMAGE_WIDTH * IMAGE_HEIGHT, REPR_SIZE)) then
+          -- reinicializa o contador em 1
+          r_COUNTER <= (REPR_SIZE-1 downto 1 => '0') & '1';
+        else
+          -- incrementa o contador
+          r_COUNTER <= std_logic_vector(unsigned(r_COUNTER) + 1);
+        end if;
       end if;
     end if;
   end process;
