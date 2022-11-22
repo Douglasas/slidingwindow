@@ -52,6 +52,7 @@ make zed-fpga  img=lena
 ```
 
 ### Send Lena, receive processed image, and show images side-by-side
+> requires Python3 modules `pyserial` and `tqdm`
 ```
 # send lena and receive processed image
 make zed-process-image img=lena TTY_PORT=/dev/ttyUSB0
