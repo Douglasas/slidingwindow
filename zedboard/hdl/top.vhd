@@ -77,7 +77,7 @@ begin
   port map (
     write_i => w_UART_RDONE,
     data_i  => w_UART_RDATA,
-    read_i  => not w_REC_EMPTY and not w_REC_VALID,
+    read_i  => not w_REC_EMPTY,
     clk_i   => i_CLK,
     rstn_i  => w_RSTN,
     full_o  => open,
