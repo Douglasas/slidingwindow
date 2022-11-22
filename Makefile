@@ -55,7 +55,11 @@ PYTHON3_ZED_PROCESS_IMAGE = zedboard/script/process_image.py
 TTY_PORT                  = /dev/ttyUSB1
 
 zed-create-project:
-	rm -rf xilinx-zed
+ifeq ($(OS),Windows_NT)
+	-rd /s /q "xilinx-zed"
+else
+	-rm -rf xilinx-zed
+endif
 	$(VIVADO) -nojou -nolog -mode tcl -source $(VIVADO_ZED_CREATE_PROJECT)
 	$(PYTHON3) $(PYTHON3_ZED_DEFINE_GENERICS) $(VIVADO_ZED_IMPORTED_TOP) $(IMG_WIDTH) $(IMG_HEIGHT) $(WINDOW_WIDTH) $(WINDOW_HEIGHT) $(PIXEL_WIDTH)
 
