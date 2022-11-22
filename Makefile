@@ -72,6 +72,10 @@ zed-fpga:
 zed-process-image:
 	$(PYTHON3) $(PYTHON3_ZED_PROCESS_IMAGE) $(TTY_PORT) $(IN_IMG) $(OUT_IMG)
 
+zed: zed-create-project zed-bitstream zed-fpga
+
+zed-image: zed-process-image python-plot-image
+
 ############################################
 ############## IMAGE COMMANDS ##############
 ############################################
