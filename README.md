@@ -54,7 +54,7 @@ make zed-fpga  img=lena
 ### Send Lena, receive processed image, and show images side-by-side
 ```
 # send lena and receive processed image
-make zed-process-image img=lena
+make zed-process-image img=lena TTY_PORT=/dev/ttyUSB0
 # plot images side-by-side
 make python-plot-image img=lena
 ```
