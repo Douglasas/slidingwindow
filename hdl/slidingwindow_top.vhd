@@ -37,9 +37,11 @@ architecture arch of slidingwindow_top is
   type t_ROWBUF_OUTS is array(WINDOW_HEIGHT-2 downto 0) of std_logic_vector(PIXEL_WIDTH-1 downto 0);
   
   ---- SIGNALS DECLARATION ----
-  signal w_WINDOW       : t_WINDOW;
   signal w_ROWBUF_OUTS  : t_ROWBUF_OUTS;
   signal w_WINDOW_VALID : std_logic;
+  signal w_WINDOW       : t_WINDOW;
+  signal r_WINDOW_VALID : std_logic;
+  signal r_WINDOW       : t_WINDOW;
 
   ---- COMPONENTS DECLARATION ----
   component slidingwindow_valid
@@ -194,27 +196,41 @@ begin
   ----------------------------------------------------------------
   --------------------------- OPERACAO ---------------------------
   ----------------------------------------------------------------
+
+  -- buffer para armazenar os sinais antes da operação
+  p_VALID : process (i_RSTN, i_CLK)
+  begin
+    if i_RSTN = '0' then
+      -- inicializa registrador de válido em 0
+      r_WINDOW_VALID <= '0';
+    elsif rising_edge(i_CLK) then
+      -- registrador de janela valida recebe resultado do bloco window valid
+      r_WINDOW_VALID <= w_WINDOW_VALID;
+      -- registra janelas válidas
+      r_WINDOW       <= w_WINDOW;
+    end if;
+  end process;
   
   -- Implemente aqui a operação desejada, utilizando o array 2D w_WINDOW e o sinal de janela valida w_VALID
   
-  o_VALID <= w_WINDOW_VALID;
+  o_VALID <= r_WINDOW_VALID;
 
   -- Sem filtro
-  -- o_PIX   <= w_WINDOW(1, 1);
+  -- o_PIX   <= r_WINDOW(1, 1);
 
   -- Filtro gaussiano
   o_PIX   <= std_logic_vector(
-    shift_right(unsigned(w_WINDOW(0, 0)), 4) +
-    shift_right(unsigned(w_WINDOW(0, 1)), 3) +
-    shift_right(unsigned(w_WINDOW(0, 2)), 4) +
+    shift_right(unsigned(r_WINDOW(0, 0)), 4) +
+    shift_right(unsigned(r_WINDOW(0, 1)), 3) +
+    shift_right(unsigned(r_WINDOW(0, 2)), 4) +
 
-    shift_right(unsigned(w_WINDOW(1, 0)), 3) +
-    shift_right(unsigned(w_WINDOW(1, 1)), 2) +
-    shift_right(unsigned(w_WINDOW(1, 2)), 3) +
+    shift_right(unsigned(r_WINDOW(1, 0)), 3) +
+    shift_right(unsigned(r_WINDOW(1, 1)), 2) +
+    shift_right(unsigned(r_WINDOW(1, 2)), 3) +
 
-    shift_right(unsigned(w_WINDOW(2, 0)), 4) +
-    shift_right(unsigned(w_WINDOW(2, 1)), 3) +
-    shift_right(unsigned(w_WINDOW(2, 2)), 4)
+    shift_right(unsigned(r_WINDOW(2, 0)), 4) +
+    shift_right(unsigned(r_WINDOW(2, 1)), 3) +
+    shift_right(unsigned(r_WINDOW(2, 2)), 4)
   );
 
 
